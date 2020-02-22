@@ -9,7 +9,8 @@ run:
     link_dir: app
     link_mode: copy
     run:
-      - docker cp app/secrets/. ansible-manager:/manager/secrets
+      - docker cp $SSH_PRIVATE_KEY ansible-manager:/manager/ansible/gce-ssh-rsa-private-key
+      - docker exec ansible-manager chmod 600 gce-ssh-rsa-private-key
       - docker cp ./playbook.yml ansible-manager:/manager/ansible/playbook.yml
 
   .exec:
@@ -36,4 +37,4 @@ run:
 
     run: >-
       docker-compose exec ansible ansible-playbook -i ${VM_INSTANCE_IP_ADDRESS},
-      -u arkye --private-key ../secrets/gce-ssh-rsa-private-key ./playbook.yml
+      -u arkye --private-key ./gce-ssh-rsa-private-key ./playbook.yml
