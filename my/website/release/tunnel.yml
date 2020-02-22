@@ -1,0 +1,29 @@
+version: '0.0.2'
+
+run:
+  .build:
+    link_dir: app
+    link_mode: copy
+
+    input:
+      build_type:
+        name: build type
+        environment_name: COMPOSE_DOCKERFILE_BUILD_TYPE
+        defaults_to: scratch
+
+      secret_key_base:
+        name: secret key (base)
+        environment_name: SECRET_KEY_BASE
+        defaults_to: S66APdw7KnYbQ2bfOAgd4TTcwGkQGrB/1EOZC6HfanlXx3qVOzlrA6NCzrh1vkse
+
+    run: docker-compose build
+
+  .pull:
+    link_dir: app
+    link_mode: copy
+    run: docker-compose pull
+
+  .push:
+    link_dir: app
+    link_mode: copy
+    run: docker-compose push

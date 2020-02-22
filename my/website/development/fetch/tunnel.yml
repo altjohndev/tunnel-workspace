@@ -1,0 +1,14 @@
+version: '0.0.2'
+
+run:
+  .vscode:
+    redirect:
+      to: vscode
+      external: true
+
+  .compose:
+    link_dir: app
+    link_mode: symlink
+    run:
+      - rm -rf app/docker-compose.yml
+      - cp docker-compose.yml app/docker-compose.yml

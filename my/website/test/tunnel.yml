@@ -1,0 +1,34 @@
+version: '0.0.2'
+
+run:
+  .exec:
+    environment:
+      COMPOSE_INTERACTIVE_NO_CLI: 'true'
+
+    input:
+      command:
+        name: test command
+        environment_name: TEST_COMMAND
+        defaults_to: test.all
+
+    run: docker-compose -f docker-compose.test.yml exec my_website mix ${TEST_COMMAND}
+
+  .build:
+    link_dir: app
+    link_mode: copy
+
+    input:
+      build_type:
+        name: build type
+        environment_name: COMPOSE_DOCKERFILE_BUILD_TYPE
+        defaults_to: scratch
+
+    run: docker-compose build
+
+  .up: docker-compose -f docker-compose.test.yml up -d
+  .down: docker-compose -f docker-compose.test.yml rm -f -s -v
+  .pull: docker-compose -f docker-compose.test.yml pull
+  .push:
+    link_dir: app
+    link_mode: copy
+    run: docker-compose push

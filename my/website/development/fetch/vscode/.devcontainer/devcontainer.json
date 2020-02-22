@@ -1,0 +1,12 @@
+{
+  "name": "My Website",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "my_website",
+  "workspaceFolder": "/app",
+  "shutdownAction": "none",
+  "extensions": ["jakebecker.elixir-ls"],
+  "settings": {
+    "elixir.autoSpawnElixirSenseServers": true,
+    "elixir.useElixirSense": true
+  }
+}

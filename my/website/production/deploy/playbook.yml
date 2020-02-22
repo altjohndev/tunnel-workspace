@@ -1,0 +1,13 @@
+- name: Deploy
+  hosts: all
+  become: true
+  tasks:
+    - name: Pull new image
+      command: docker-compose pull
+      args:
+        chdir: /home/arkye/my-website
+
+    - name: Restart services
+      command: docker-compose up -d
+      args:
+        chdir: /home/arkye/my-website

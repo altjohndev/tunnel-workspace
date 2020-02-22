@@ -1,0 +1,8 @@
+version: '3.7'
+
+services:
+  ansible:
+    image: altjohndev/ansible
+    container_name: ansible-manager
+    environment:
+      ANSIBLE_HOST_KEY_CHECKING: ${ANSIBLE_HOST_KEY_CHECKING:-false}

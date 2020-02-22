@@ -1,0 +1,55 @@
+version: '3.7'
+
+services:
+  my_website:
+    image: altjohndev/my-website:development
+    container_name: my_website
+    volumes:
+      - ../.git:/app/.git
+
+      - ../assets/css:/app/assets/css
+      - ../assets/js:/app/assets/js
+      - ../assets/static:/app/assets/static
+      - ../assets/vendor:/app/assets/vendor
+
+      - ../assets/.babelrc:/app/assets/.babelrc
+      - ../assets/package.json:/app/assets/package.json
+      - ../assets/webpack.config.js:/app/assets/webpack.config.js
+      - ../assets/yarn.lock:/app/assets/yarn.lock
+
+      - ../config:/app/config
+      - ../lib:/app/lib
+      - ../priv/gettext:/app/priv/gettext
+      - ../priv/repo:/app/priv/repo
+      - ../test:/app/test
+
+      - ../.formatter.exs:/app/.formatter.exs
+      - ../.gitignore:/app/.gitignore
+      - ../.gitlab-ci.yml:/app/.gitlab-ci.yml
+
+      - ../LICENSE:/app/LICENSE
+      - ../mix.exs:/app/mix.exs
+      - ../mix.lock:/app/mix.lock
+      - ../README.md:/app/README.md
+
+      - elixir_ls:/app/.elixir_ls
+      - mix:/root/.mix
+      - vscode_server:/root/.vscode-vscode_placeholder
+    ports:
+      - 4000:4000
+    networks:
+      - network
+
+networks:
+  network:
+    name: altjohndev
+
+volumes:
+  elixir_ls:
+    name: my_website_elixir_ls
+
+  mix:
+    name: my_website_mix
+
+  vscode_server:
+    name: my_website_vscode_server

@@ -1,0 +1,39 @@
+version: '0.0.2'
+
+run:
+  .pull: docker-compose pull
+  .up: docker-compose up -d
+  .down: docker-compose down
+
+  .sync:
+    link_dir: app
+    link_mode: copy
+    run:
+      - docker cp app/secrets/. ansible-manager:/manager/secrets
+      - docker cp ./playbook.yml ansible-manager:/manager/ansible/playbook.yml
+
+  .exec:
+    environment:
+      COMPOSE_INTERACTIVE_NO_CLI: 'true'
+
+    input:
+      command:
+        name: command
+        environment_name: COMMAND
+        defaults_to: ansible --version
+
+    run: docker-compose exec ansible ${COMMAND}
+
+  .playbook:
+    environment:
+      COMPOSE_INTERACTIVE_NO_CLI: 'true'
+
+    input:
+      1_ip_address:
+        name: host address
+        environment_name: VM_INSTANCE_IP_ADDRESS
+        defaults_to: ''
+
+    run: >-
+      docker-compose exec ansible ansible-playbook -i ${VM_INSTANCE_IP_ADDRESS},
+      -u arkye --private-key ../secrets/gce-ssh-rsa-private-key ./playbook.yml

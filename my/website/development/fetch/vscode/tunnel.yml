@@ -1,0 +1,17 @@
+version: '0.0.2'
+
+run:
+  .devcontainer:
+    link_dir: app
+    link_mode: symlink
+
+    input:
+      server_type:
+        name: server type
+        environment_name: DEVCONTAINER_SERVER_TYPE
+        defaults_to: server
+
+    run:
+      - sed -i s/vscode_placeholder/$DEVCONTAINER_SERVER_TYPE/g .devcontainer/docker-compose.yml
+      - rm -rf app/.devcontainer
+      - cp -r .devcontainer app/.devcontainer

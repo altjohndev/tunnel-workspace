@@ -1,0 +1,51 @@
+version: '0.0.2'
+
+run:
+  .up:
+    environment:
+      COMPOSE_IGNORE_ORPHANS: 'true'
+      COMPOSE_INTERACTIVE_NO_CLI: 'true'
+
+    input:
+      0_project_name:
+        name: project name
+        environment_name: COMPOSE_PROJECT_NAME
+        defaults_to: altjohndev
+
+      1_network_name:
+        name: network name
+        environment_name: COMPOSE_NETWORK_NAME
+        defaults_to: altjohndev
+
+      2_service_name:
+        name: service name
+        environment_name: COMPOSE_SERVICE_NAME
+        defaults_to: postgres
+
+      3_volume_name:
+        name: volume name
+        environment_name: COMPOSE_VOLUME_NAME
+        defaults_to: altjohndev_postgres
+
+    run:
+      - sed -i -e s/service:/$COMPOSE_SERVICE_NAME:/g docker-compose.yml
+      - docker-compose up -d
+
+  .down:
+    environment:
+      COMPOSE_INTERACTIVE_NO_CLI: 'true'
+
+    input:
+      0_project_name:
+        name: project name
+        environment_name: COMPOSE_PROJECT_NAME
+        defaults_to: altjohndev
+
+      1_service_name:
+        name: service name
+        environment_name: COMPOSE_SERVICE_NAME
+        defaults_to: postgres
+
+    run:
+      - sed -i -e s/service:/$COMPOSE_SERVICE_NAME:/g docker-compose.yml
+      - docker-compose rm -f -s -v

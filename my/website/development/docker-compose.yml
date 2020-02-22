@@ -1,0 +1,8 @@
+version: '3.7'
+
+services:
+  my_website:
+    image: altjohndev/my-website:development
+    build:
+      context: app
+      dockerfile: ../${COMPOSE_DOCKERFILE_BUILD_TYPE:-scratch}.Dockerfile

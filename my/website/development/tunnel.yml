@@ -1,0 +1,29 @@
+version: '0.0.2'
+
+run:
+  .fetch:
+    redirect:
+      to: fetch
+      external: true
+
+  .build:
+    link_dir: app
+    link_mode: copy
+
+    input:
+      build_type:
+        name: build type
+        environment_name: COMPOSE_DOCKERFILE_BUILD_TYPE
+        defaults_to: scratch
+
+    run: docker-compose build
+
+  .pull:
+    link_dir: app
+    link_mode: copy
+    run: docker-compose pull
+
+  .push:
+    link_dir: app
+    link_mode: copy
+    run: docker-compose push

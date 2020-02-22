@@ -1,0 +1,22 @@
+version: '0.0.2'
+
+run:
+  .development:
+    redirect:
+      to: development
+      external: true
+
+  .test:
+    redirect:
+      to: test
+      external: true
+
+  .release:
+    redirect:
+      to: release
+      external: true
+
+  .production:
+    redirect:
+      to: production
+      external: true

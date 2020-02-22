@@ -1,0 +1,8 @@
+version: '3.7'
+
+services:
+  my_website:
+    image: altjohndev/my-website:${COMPOSE_IMAGE_TAG:-unstable}
+    build:
+      context: app
+      dockerfile: ../Dockerfile

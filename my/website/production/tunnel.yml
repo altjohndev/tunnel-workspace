@@ -1,0 +1,84 @@
+version: '0.0.2'
+
+run:
+  .deploy:
+    redirect:
+      to: deploy
+      external: true
+
+  .fetch:
+    redirect:
+      to: fetch
+      external: true
+
+  .build:
+    link_dir: app
+    link_mode: copy
+
+    input:
+      image_tag:
+        name: docker image tag
+        environment_name: COMPOSE_IMAGE_TAG
+        defaults_to: unstable
+
+    run: docker-compose build
+
+  .pull:
+    link_dir: app
+    link_mode: copy
+
+    input:
+      image_tag:
+        name: docker image tag
+        environment_name: COMPOSE_IMAGE_TAG
+        defaults_to: unstable
+
+    run: docker-compose pull
+
+  .push:
+    link_dir: app
+    link_mode: copy
+
+    input:
+      image_tag:
+        name: docker image tag
+        environment_name: COMPOSE_IMAGE_TAG
+        defaults_to: unstable
+
+    run: docker-compose push
+
+  .up:
+    environment:
+      COMPOSE_IGNORE_ORPHANS: 'true'
+
+    input:
+      0_project_name:
+        name: project name
+        environment_name: COMPOSE_PROJECT_NAME
+        defaults_to: altjohndev
+
+      1_network_name:
+        name: network name
+        environment_name: COMPOSE_NETWORK_NAME
+        defaults_to: altjohndev
+
+      2_image_tag:
+        name: docker image tag
+        environment_name: COMPOSE_IMAGE_TAG
+        defaults_to: unstable
+
+      3_port:
+        name: port
+        environment_name: HOST_PORT
+        defaults_to: '80'
+
+    run: docker-compose -f docker-compose.production.yml up -d
+
+  .down:
+    input:
+      project_name:
+        name: project name
+        environment_name: COMPOSE_PROJECT_NAME
+        defaults_to: altjohndev
+
+    run: docker-compose -f docker-compose.production.yml rm -f -s -v

@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  service:
+    image: postgres:9.6.17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - volume:/var/lib/postgresql/data
+    networks:
+      - network
+
+networks:
+  network:
+    name: ${COMPOSE_NETWORK_NAME:-altjohndev}
+
+volumes:
+  volume:
+    name: ${COMPOSE_VOLUME_NAME:-altjohndev_postgres}

@@ -1,0 +1,10 @@
+version: '0.0.2'
+
+run:
+  .compose:
+    link_dir: app
+    link_mode: symlink
+
+    run:
+      - rm -rf app/docker-compose.production.yml
+      - cp docker-compose.production.yml app/docker-compose.production.yml
